@@ -1,11 +1,13 @@
-const express = require('express');
 const axios = require('axios');
-const app = express();
-app.use(express.json());
 
-app.post('/', async (req, res) => {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.status(405).json({ message: 'Method not allowed' });
+    return;
+  }
+
   try {
-    // Extract variables from headers and request body
+    // Your adapted code here...
     let sourcerow = parseInt(req.headers['sourcerow']);
     let usersub = req.headers['wpurl'];
     let userkey = req.headers['userkey'];
@@ -41,8 +43,6 @@ app.post('/', async (req, res) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Send request to WordPress API
-    req.headers['usersub'];
-    req.headers['userkey'];
     let wordpressResponse = await axios({
       method: 'POST',
       url: `https://${usersub}/wp-json/wp/v2/${posttype}`, // Use posttype from the request headers
@@ -63,7 +63,7 @@ app.post('/', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong.', error: error.message });
   }
-});
+}
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
