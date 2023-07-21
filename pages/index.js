@@ -37,7 +37,7 @@ export default function Home() {
         >
         </iframe>
       </div>
-      <a href="https://www.canva.com/design/DAFpTo33F0s/view?utm_content=DAFpTo33F0s&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Copy of AI SECRET AGENT DEMO</a> by Shawn Mason
+      <a href="https://www.canva.com/design/DAFpTo33F0s/view?utm_content=DAFpTo33F0s&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">AI SECRET AGENT DEMO</a> by Shawn Mason
     </>
   );
 }
