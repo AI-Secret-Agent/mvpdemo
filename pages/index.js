@@ -10,13 +10,13 @@ export default function Home() {
         position: 'relative', 
         width: '100%', 
         height: '0', 
-        paddingTop: '56.2225%',
+        paddingTop: '0',
         paddingBottom: '0', 
-        boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)', 
-        marginTop: '1.6em', 
-        marginBottom: '0.9em', 
+        boxShadow: '0', 
+        marginTop: '0', 
+        marginBottom: '0', 
         overflow: 'hidden',
-        borderRadius: '8px', 
+        borderRadius: '0', 
         willChange: 'transform'
       }}>
         <iframe 
