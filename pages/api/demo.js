@@ -64,8 +64,3 @@ export default async function handler(req, res) {
     res.status(500).json({ message: 'Something went wrong.', error: error.message });
   }
 }
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Your app is listening on port ${PORT}`);
-});
