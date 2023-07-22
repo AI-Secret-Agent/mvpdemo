@@ -32,7 +32,7 @@ The Google App Script generates content and uses the Node.js server to communica
 # Setup <a name="setup"></a>
 1. Clone this repository to your local machine.
 2. Navigate to the root directory of the project in your terminal and run `npm install` to install all the dependencies.
-3. Create a `.env` file in the root directory of the project and add your OpenAI API key and port number.
+3. Create a `.env` file in the root directory (or the ui) of the project and add your OpenAI API key and port number.
 4. Run the Node.js server using the `npm start` command.
    
 ### Vercel One-Click Deploy  <a name="vercel"></a>
@@ -103,7 +103,7 @@ This project includes two major components:
 Follow the steps to set up and install the project.
 
 ## Node.js Server <a name="nodejs-server"></a>
-The Node.js application exposes an endpoint (`/`) that accepts POST requests. This endpoint:
+The Node.js application exposes an endpoint (`/api/demo`) that accepts POST requests. This endpoint:
 
 2. Extracts variables from request headers and body.
 4. On receiving a response from the OpenAI API, it processes the response sending it to wordpress as a draft post or page
