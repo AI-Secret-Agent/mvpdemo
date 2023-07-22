@@ -39,8 +39,6 @@ export default async function handler(req, res) {
     let response = await axios.post('https://api.openai.com/v1/chat/completions', data, { headers });
     let newText = response.data.choices[0].message.content;
 
-    // Delay for 1 second before sending the request to the WordPress API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const titleRegex = /<h1>(.*?)<\/h1>|title:\s*(.+)|#\s*(.+)/i;
 const titleMatches = newText.match(titleRegex);
