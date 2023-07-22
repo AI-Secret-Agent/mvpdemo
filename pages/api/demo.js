@@ -42,6 +42,19 @@ export default async function handler(req, res) {
     // Delay for 1 second before sending the request to the WordPress API
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    const titleRegex = /<h1>(.*?)<\/h1>|title:\s*(.+)|#\s*(.+)/i;
+const titleMatches = newText.match(titleRegex);
+let newTitle = defaultTitle; // Default title if extraction fails
+if (titleMatches && titleMatches.length > 1) {
+  // Iterate through the captured groups and find the non-empty match
+  for (let i = 1; i < titleMatches.length; i++) {
+    if (titleMatches[i]) {
+      newTitle = titleMatches[i].trim();
+      break;
+    }
+  }
+}
+
     // Send request to WordPress API
     let wordpressResponse = await axios({
       method: 'POST',
@@ -51,7 +64,7 @@ export default async function handler(req, res) {
         'Authorization': `Basic ${Buffer.from(userkey).toString('base64')}`,
       },
       data: JSON.stringify({
-        'title': "",  // Use defaultTitle instead of newTitle
+        'title': newTitle,  // Use defaultTitle instead of newTitle
         'content': newText,
         'status': 'draft',
         'sourcerow': sourcerow,
