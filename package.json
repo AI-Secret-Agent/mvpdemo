@@ -1,5 +1,5 @@
 {
-  "name": "AI-Secret-Agent-Demo-Node",
+  "name": "AI-Secret-Agent-Demo",
   "version": "0.0.1",
   "description": "A Demo Proxy for OpenAI API Integration",
   "main": "next.config.js",
@@ -26,4 +26,4 @@
     "next",
     "react"
   ]
-}
+}  
