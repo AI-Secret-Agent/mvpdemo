@@ -123,5 +123,19 @@ Once the Node.js server is running and the Google Apps Script code is set up, yo
 3. In the Apps Script Editor, select `generateContent` and click on the play icon to run the function.
 4. The function will process any content in B column, making API calls for each cell content, posting to wordpress and logging responses.
 
-This is a Demo Version of the Full Modular MVP Version, for More Info Check out http://aisecretagent.com
+## Fully Modular Limited Release Version Coming Soon!
+
+This is a Demo Version of the Full Modular MVP Version.  Releasing in VERY Limited Quantities Soon! 
+
+For More Info join us at http://discord.aisecretagent.com and subscribe to the AI-News-Alerts and AI-Secret-Agent-Blog-Alerts so you don't miss it!  It's just too good to sell to everyone, so don't miss your chance!
+
+Good luck with the Demo, I hope you enjoy it.
+
+If you have questions or problems, hit up the Discord.
+
+See You Soon
+
+Shawn Mason
+
+https://simpletechnicalsolutions.com
 
