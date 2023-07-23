@@ -32,9 +32,20 @@ This Can Be Deployed for Free on Replit or a Number of App Hosting Platforms.  Y
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/aisecretagent/mvpdemo)
 
 ### Both these methods will install all needed dependencies and will only require you to add your variables.
-#### For the Deployment Your Env Variables are
+
+# For the Server Deployment Your Env Variables are
+
 OPENAI_KEY  -  yourkey
 PORT  -    3000  or another if you're using that for something
+
+## Vercel Example
+
+![Vercel](https://github.com/AI-Secret-Agent/mvpdemo/assets/132690496/2d7cc4ef-df96-4dc2-9962-f76ded05635a)
+
+## Replit Example
+
+![Replit](https://github.com/aisecretagent/mvpdemo/assets/132690496/64df03f2-2267-4d65-87a5-d148119780fc)
+
 
 The Google Sheet has a Script that requires it's own variables "Script Properties"
 
@@ -45,6 +56,8 @@ Add The Script Properties
 wpurl  -  the url of your wordpress blog urlofblog.com  (https:// is NOT needed)
 wpkey - this is your application pass in the form of  username:password  (create in user profile)
 proxyurl  -  this is the adress of your deployed app, https://yourappname.vercel.app/api/demo (https:// is required here the enpoint is /api/demo  https://yourappurl/api/demo
+
+![AppScript](https://github.com/aisecretagent/mvpdemo/assets/132690496/4d6d4132-cd96-476f-b627-5b91ee32cee4)
 
 When you deploy it and you visit the endpoint you should see {"message":"Method not allowed"}  this means the node is up and rejecting your attempt to "GET"
 
