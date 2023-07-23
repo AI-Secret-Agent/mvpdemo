@@ -1,5 +1,58 @@
 # AI Secret Agent Demo
+
+## Basic Overview and Quick Setup
 Demonstation of Open AI API Integration for Content Generation using Node.js and Google Sheets
+
+My Intention was to Allow anyone to Quickly and Easily Set up their own Content Publishing App.
+
+Finding the easiest method for a simple deployment was a priority. 
+
+We are Using Next.js as a framework for deployment and routing.
+
+We are not really utilizing it as a front-end at this point.   
+
+## Basic Requirements
+
+Google Account
+OpenAI API Key
+
+## Simple Quick Setup
+
+### Simple Explanation is Clone the Repo Copy the Sheet and add Your Secure Variables
+
+This Can Be Deployed for Free on Replit or a Number of App Hosting Platforms
+
+Your Primary Concern will Likely Be Timeout on the Open AI Request.  
+
+## Vercel has a free limit of 10 seconds, if you upgrade it will be 60 seconds which should be more than enough.
+
+##You can deploy to vercel with one click
+
+### Vercel One-Click Deploy  <a name="vercel"></a>
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/aisecretagent/mvpdemo)
+
+### Both these methods will install all needed dependencies and will only require you to add your variables.
+#### For the Deployment Your Env Variables are
+OPENAI_KEY  -  yourkey
+PORT  -    3000  or another if you're using that for something
+
+The Google Sheet has a Script that requires it's own variables "Script Properties"
+
+[Copy This Sheet](https://docs.google.com/spreadsheets/d/1YPAEO9TYhBnivo54E5FnzVqMi_mSS57fSCniDsaLYjQ/edit?usp=sharing)
+
+Add The Script Properties
+
+wpurl  -  the url of your wordpress blog urlofblog.com  (https:// is NOT needed)
+wpkey - this is your application pass in the form of  username:password  (create in user profile)
+proxyurl  -  this is the adress of your deployed app, https://yourappname.vercel.app/api/demo (https:// is required here the enpoint is /api/demo  https://yourappurl/api/demo
+
+If you deploy it and you visit the endpoint you should see {"message":"Method not allowed"}  this means the node is up and rejecting your attempt to "GET"
+
+If you add tasks and prompts in the Sheet, you can run generatecontent function and it will send a post request, which will post the response to your WordPress as a Draft.
+
+There is more detailed documentation below.
+
 # Table of Contents
 1. [Project Overview](#project-overview)
 2. [Requirements](#requirements)
@@ -30,19 +83,13 @@ The Google App Script generates content and uses the Node.js server to communica
 - OpenAI API Key
 
 # Setup <a name="setup"></a>
+
+### Clone and Deploy
+
 1. Clone this repository to your local machine.
 2. Navigate to the root directory of the project in your terminal and run `npm install` to install all the dependencies.
 3. Create a `.env` file in the root directory (or the ui) of the project and add your OpenAI API key and port number.
 4. Run the Node.js server using the `npm start` command.
-   
-### Vercel One-Click Deploy  <a name="vercel"></a>
-
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/aisecretagent/mvpdemo)
-
-### Clone and Deploy
 
 ```bash
 git clone https://github.com/aisecretagent/mvpdemo
