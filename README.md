@@ -11,19 +11,21 @@ We are Using Next.js as a framework for deployment and routing.
 ## Basic Requirements
 
 Google Account
+
 OpenAI API Key
 
-## Simple Quick Setup
 
-### Simple Explanation is Clone the Repo Copy the Sheet and add Your Secure Variables
+# Simple Quick Setup Guide
 
-This Can Be Deployed for Free on Replit or a Number of App Hosting Platforms
+### Clone Repository, Copy Sheet, Add Variables and Run Function.  That's it!
 
-Your Primary Concern will Likely Be Timeout on the Open AI Request.  
+This Can Be Deployed for Free on Replit or a Number of App Hosting Platforms.  Your Primary Concern with Free Platforms will Likely Be Timeout on the Open AI Request.  
 
-## Vercel has a free limit of 10 seconds, if you upgrade it will be 60 seconds which should be more than enough.
+### Replit is easy to deploy and seems to handle requests.  It may not handle a longer request such as GPT4 or any 32k model.
 
-##You can deploy to vercel with one click
+### Vercel has a free limit of 10 seconds, if you upgrade it will be 60 seconds which should be more than enough.
+
+## You can deploy to vercel with one click
 
 ### Vercel One-Click Deploy  <a name="vercel"></a>
 
@@ -44,11 +46,14 @@ wpurl  -  the url of your wordpress blog urlofblog.com  (https:// is NOT needed)
 wpkey - this is your application pass in the form of  username:password  (create in user profile)
 proxyurl  -  this is the adress of your deployed app, https://yourappname.vercel.app/api/demo (https:// is required here the enpoint is /api/demo  https://yourappurl/api/demo
 
-If you deploy it and you visit the endpoint you should see {"message":"Method not allowed"}  this means the node is up and rejecting your attempt to "GET"
+When you deploy it and you visit the endpoint you should see {"message":"Method not allowed"}  this means the node is up and rejecting your attempt to "GET"
 
-If you add tasks and prompts in the Sheet, you can run generatecontent function and it will send a post request, which will post the response to your WordPress as a Draft.
+Add tasks and prompts in the Sheet, you can run generatecontent function and it will send a post request, which will post the response to your WordPress as a Draft.
 
-There is more detailed documentation below.
+If you get a html response, try removing or adding the / from the proxy url in your sheet properties (sometimes one works, sometimes the other)
+If you get a 401 error that means it is working and rejecting the authentication you should check that you have the correct OPENAI API key, check whitespaces, and make sure the proxy url has https:// if it's not a secure connection or your key is invalid you will get this error.
+
+Those are the most common issues, we will add a detailed troubleshooting guide as we move forward.  Good Luck!
 
 # Table of Contents
 1. [Project Overview](#project-overview)
