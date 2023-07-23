@@ -1,15 +1,12 @@
 # AI Secret Agent Demo
 
 ## Basic Overview and Quick Setup
-Demonstation of Open AI API Integration for Content Generation using Node.js and Google Sheets
 
-My Intention was to Allow anyone to Quickly and Easily Set up their own Content Publishing App.
-
-Finding the easiest method for a simple deployment was a priority. 
+This is a Demonstation of Open AI API Integration for Content Generation using Node.js and Google Sheets. 
 
 We are Using Next.js as a framework for deployment and routing.
 
-We are not really utilizing it as a front-end at this point.   
+###This is designed to be as simple to setup and to use as possible. 
 
 ## Basic Requirements
 
@@ -81,6 +78,7 @@ The Google App Script generates content and uses the Node.js server to communica
 - npm (comes with Node.js)
 - Google Sheets
 - OpenAI API Key
+- Next.js
 
 # Setup <a name="setup"></a>
 
@@ -113,7 +111,6 @@ For the Google App Script, you will need to set up the necessary properties and 
 ## Headers <a name="headers"></a>
 The following headers are required for the POST request:
 
-
 - `sourcerow`: The row of the Google Sheet from where the data originates.
 - `wpurl`: The URL of your WordPress site.
 - `userkey`: Your WordPress user key.
@@ -140,11 +137,13 @@ Before using the script, make sure to set up the script properties using the `se
 
 The `generateContent()` function will iterate over all the tasks in Column B and generate content using the Node.js server and OpenAI's API. It uses the specified OpenAI model, post type, prompts, temperature, and token limit
 
-# OpenAI Node.js and Google Apps Script Components <a name="components"></a>
-This project includes two major components:
+# OpenAI Node.js, Next.js, and Google Apps Script Components <a name="components"></a>
 
-1. A Node.js application serving as a backend server, making requests to the OpenAI API, and
-2. A Google Apps Script code running in Google Sheets, interfacing with the Node.js backend to generate and manage content.
+This project includes three major components:
+
+1. A Node.js application serving as a backend server, making requests to the OpenAI API.
+2. A Next.js application to handle routing and deployment of the application.
+3. A Google Apps Script code running in Google Sheets, interfacing with the Node.js backend to generate and manage content.
 
 ## Installation & Setup <a name="installation-setup"></a>
 Follow the steps to set up and install the project.
@@ -152,15 +151,23 @@ Follow the steps to set up and install the project.
 ## Node.js Server <a name="nodejs-server"></a>
 The Node.js application exposes an endpoint (`/api/demo`) that accepts POST requests. This endpoint:
 
-2. Extracts variables from request headers and body.
-4. On receiving a response from the OpenAI API, it processes the response sending it to wordpress as a draft post or page
+1. Extracts variables from request headers and body.
+2. Makes a request to the OpenAI API using these parameters.
+3. On receiving a response from the OpenAI API, it processes the response sending it to WordPress as a draft post or page.
+
+## Next.js Application <a name="nextjs-app"></a>
+The Next.js application:
+
+1. Handles routing, making it easier to navigate different parts of the application.
+2. Provides a framework for server-side rendering, improving the performance of the application.
+3. Allows for easy deployment of the application on Vercel or any platform that supports Next.js.
 
 ## Google Apps Script <a name="google-apps-script"></a>
 The Google Apps Script code:
 
-1. Sets up and manages script properties using the 'Properties' sheet in your Google Sheets document. These properties include keys, urls, and other configuration values.
+1. Sets up and manages script properties using the 'Properties' sheet in your Google Sheets document. These properties include keys, URLs, and other configuration values.
 2. Defines a function `generateContent()` that fetches content from the sheet, constructs the appropriate API call, and sends a POST request to the Node.js server.
-3. On receiving the response, it logs the response details moving posted content from the task list and adding the post id next to it.  It also provides errors for debugging purposes.
+3. On receiving the response, it logs the response details moving posted content from the task list and adding the post ID next to it. It also provides errors for debugging purposes.
 
 # Usage <a name="usage"></a>
 Once the Node.js server is running and the Google Apps Script code is set up, you can start using the application. The general flow is:
