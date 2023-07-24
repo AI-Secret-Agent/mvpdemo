@@ -5,7 +5,10 @@ export default async function handler(req, res) {
     res.status(405).json({ message: 'Method not allowed' });
     return;
   }
-
+ if (!req.headers['yourKey'] || req.headers['yourKey'] !== process.env.YOUR_KEY) {
+    res.status(401).json({ message: 'Invalid API key' });
+    return;
+  }
   try {
     // Your adapted code here...
     let sourcerow = parseInt(req.headers['sourcerow']);
@@ -38,6 +41,8 @@ export default async function handler(req, res) {
 
     let response = await axios.post('https://api.openai.com/v1/chat/completions', data, { headers });
     let newText = response.data.choices[0].message.content;
+    console.log("NewText: ", newText);
+
 
 
     const titleRegex = /<h1>(.*?)<\/h1>|title:\s*(.+)|#\s*(.+)/i;
