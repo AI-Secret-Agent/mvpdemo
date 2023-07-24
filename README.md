@@ -14,6 +14,7 @@ Google Account
 
 OpenAI API Key
 
+WordPress
 
 # Simple Quick Setup Guide
 
@@ -25,7 +26,8 @@ This Can Be Deployed for Free on Replit or a Number of App Hosting Platforms.  Y
 
 ### Vercel has a free limit of 10 seconds, if you upgrade it will be 60 seconds which should be more than enough.
 
-## You can deploy to vercel with one click
+## You can deploy to Vercel with one click,  the personal authentication refuses to work on Vercel so you have to figure out why or find another way.
+It works everywhere else I really don't understand it. 
 
 ### Vercel One-Click Deploy  <a name="vercel"></a>
 
@@ -35,8 +37,9 @@ This Can Be Deployed for Free on Replit or a Number of App Hosting Platforms.  Y
 
 # For the Server Deployment Your Env Variables are
 
-OPENAI_KEY  -  yourkey
+OPENAI_KEY  -  Your Open AI API Key 
 PORT  -    3000  or another if you're using that for something
+pkey -  your personal key - make it up or generate one, has to match on both servers
 
 ## Vercel Example
 
@@ -56,6 +59,7 @@ Add The Script Properties
 wpurl  -  the url of your wordpress blog urlofblog.com  (https:// is NOT needed)
 wpkey - this is your application pass in the form of  username:password  (create in user profile)
 proxyurl  -  this is the adress of your deployed app, https://yourappname.vercel.app/api/demo (https:// is required here the enpoint is /api/demo  https://yourappurl/api/demo
+pkey -  your personal key - make it up or generate one, has to match on both servers
 
 ![AppScript](https://github.com/aisecretagent/mvpdemo/assets/132690496/4d6d4132-cd96-476f-b627-5b91ee32cee4)
 
