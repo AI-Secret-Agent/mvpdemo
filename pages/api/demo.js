@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     res.status(405).json({ message: 'Method not allowed' });
     return;
   }
- if (!req.headers['yourKey'] || req.headers['yourKey'] !== process.env.YOUR_KEY) {
+ if (!req.headers['pKey'] || req.headers['pKey'] !== process.env.pkey) {
     res.status(401).json({ message: 'Invalid API key' });
     return;
   }
