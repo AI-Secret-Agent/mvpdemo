@@ -16,7 +16,6 @@ export default async function handler(req, res) {
     const posttype = req.headers['posttype'];
     const model = req.body.model;
     const maxTokens = req.body.maxTokens;
-    const defaultTitle = req.body.defaultTitle;
     const temperature = req.body.temperature;
     const messages = req.body.messages;
 
@@ -27,7 +26,6 @@ export default async function handler(req, res) {
       'userkey': userkey,
       'posttype': posttype,
       'sourcerow': sourcerow,
-      'defaultTitle': defaultTitle,
     };
 
     let data = {
@@ -45,7 +43,7 @@ export default async function handler(req, res) {
 
     const titleRegex = /<h1>(.*?)<\/h1>|title:\s*(.+)|#\s*(.+)/i;
 const titleMatches = newText.match(titleRegex);
-let newTitle = defaultTitle; // Default title if extraction fails
+let newTitle = "defaultTitle";  // Default title if extraction fails
 if (titleMatches && titleMatches.length > 1) {
   // Iterate through the captured groups and find the non-empty match
   for (let i = 1; i < titleMatches.length; i++) {
