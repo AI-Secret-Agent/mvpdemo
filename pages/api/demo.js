@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     return;
   }
   try {
-    // Your adapted code here...
     let sourcerow = parseInt(req.headers['sourcerow']);
     let usersub = req.headers['wpurl'];
     let userkey = req.headers['userkey'];
@@ -36,7 +35,6 @@ export default async function handler(req, res) {
       messages,
       max_tokens: maxTokens,
       temperature: temperature,
-      logit_bias: { 21481: -100, 7664: -100 },
     };
 
     let response = await axios.post('https://api.openai.com/v1/chat/completions', data, { headers });
