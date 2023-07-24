@@ -18,52 +18,44 @@ WordPress
 
 # Simple Quick Setup Guide
 
-### Clone Repository, Copy Sheet, Add Variables and Run Function.  That's it!
+## Clone Repository, Copy Sheet, Add Variables and Run Function.  That's it!
 
 This Can Be Deployed for Free on Replit or a Number of App Hosting Platforms.  Your Primary Concern with Free Platforms will Likely Be Timeout on the Open AI Request.  
 
-### Replit is easy to deploy and seems to handle requests.  It may not handle a longer request such as GPT4 or any 32k model.
-
-### Vercel has a free limit of 10 seconds, if you upgrade it will be 60 seconds which should be more than enough.
-
-## You can deploy to Vercel with one click,  the personal authentication refuses to work on Vercel so you have to figure out why or find another way.
-It works everywhere else I really don't understand it. 
-
-### Vercel One-Click Deploy  <a name="vercel"></a>
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/aisecretagent/mvpdemo)
-
-### Both these methods will install all needed dependencies and will only require you to add your variables.
+## Replit is easy to deploy and seems to handle requests.  It may not handle a longer request such as GPT4 or any 32k model.
 
 # For the Server Deployment Your Env Variables are
 
-OPENAI_KEY  -  Your Open AI API Key 
-PORT  -    3000  or another if you're using that for something
-pkey -  your personal key - make it up or generate one, has to match on both servers
+### OPENAI_KEY  -  Your Open AI API Key 
 
-## Vercel Example
+### PORT  -    3000  or another if you're using that for something
 
-![Vercel](https://github.com/AI-Secret-Agent/mvpdemo/assets/132690496/2d7cc4ef-df96-4dc2-9962-f76ded05635a)
+### pkey -  your personal key - make it up or generate one, has to match on both servers
 
-## Replit Example
+![replit](https://github.com/aisecretagent/mvpdemo/assets/132690496/d1940a3f-2cf6-4275-93f5-e0a04dcdd03e)
 
-![Replit](https://github.com/aisecretagent/mvpdemo/assets/132690496/64df03f2-2267-4d65-87a5-d148119780fc)
+When you run the node and you visit the endpoint (/api/demo) you should see {"message":"Method not allowed"}  this means the node is up and rejecting your attempt to "GET" This is expected behavior.
 
-
-The Google Sheet has a Script that requires it's own variables "Script Properties"
+## The Google Sheet has a Script that requires it's own variables "Script Properties"
 
 [Copy This Sheet](https://docs.google.com/spreadsheets/d/1YPAEO9TYhBnivo54E5FnzVqMi_mSS57fSCniDsaLYjQ/edit?usp=sharing)
 
-Add The Script Properties
+### Add The Script Properties
 
 wpurl  -  the url of your wordpress blog urlofblog.com  (https:// is NOT needed)
 wpkey - this is your application pass in the form of  username:password  (create in user profile)
 proxyurl  -  this is the adress of your deployed app, https://yourappname.vercel.app/api/demo (https:// is required here the enpoint is /api/demo  https://yourappurl/api/demo
 pkey -  your personal key - make it up or generate one, has to match on both servers
 
-![AppScript](https://github.com/aisecretagent/mvpdemo/assets/132690496/4d6d4132-cd96-476f-b627-5b91ee32cee4)
+## You Can Add Them From The First Sheet With A Function 
 
-When you deploy it and you visit the endpoint you should see {"message":"Method not allowed"}  this means the node is up and rejecting your attempt to "GET"
+![sheetproperties](https://github.com/aisecretagent/mvpdemo/assets/132690496/b3492aa3-afdc-4278-a971-565a14041f66)
+
+
+## Also Manually if You Prefer
+
+![AppScript](https://github.com/aisecretagent/mvpdemo/assets/132690496/1b6e224c-7590-439c-a087-3979cc1fbe68)
+
 
 Add tasks and prompts in the Sheet, you can run generatecontent function and it will send a post request, which will post the response to your WordPress as a Draft.
 
@@ -106,26 +98,11 @@ The Google App Script generates content and uses the Node.js server to communica
 
 ### Clone and Deploy
 
-1. Clone this repository to your local machine.
-2. Navigate to the root directory of the project in your terminal and run `npm install` to install all the dependencies.
-3. Create a `.env` file in the root directory (or the ui) of the project and add your OpenAI API key and port number.
-4. Run the Node.js server using the `npm start` command.
+This can be deployed on various platforms, I will try to come up with a basic guide for common ones.
 
-```bash
-git clone https://github.com/aisecretagent/mvpdemo
-```
+As is this should work on most platforms, your server, replit I have tested.  Vercel worked until I added the personal authentication so if you can solve that problem, let me know how you fixed it?
 
-Install the Vercel CLI:
-
-```bash
-npm i -g vercel
-```
-
-Then run the app at the root of the repository:
-
-```bash
-vercel dev
-```
+Might just be my cache?  I got exausted trying to understand.  It works everywhere else XD 
 
 You can obtain a copy of the Demo Sheet at https://docs.google.com/spreadsheets/d/1YPAEO9TYhBnivo54E5FnzVqMi_mSS57fSCniDsaLYjQ/edit?usp=sharing
 For the Google App Script, you will need to set up the necessary properties and use the `generateContent()` function to generate content and interact with the Node.js server. 
@@ -214,4 +191,3 @@ If you have questions or problems, hit up the Discord.
 See You Soon
 
 Shawn
-
