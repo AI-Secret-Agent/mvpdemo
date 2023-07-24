@@ -1,0 +1,220 @@
+///PARSE ALL FEEDS  
+
+
+function parseAllFeeds() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0]; // Get the first sheet
+  parseFeeds(sheet);
+}
+
+
+function detectFeedType(root) {
+  // Detect the feed type based on the root element name and namespace URI
+  var rootName = root.getName();
+  var rootNamespace = root.getNamespace().getURI();
+  if (rootName === 'rss') {
+    return 'rss';
+  } else if (rootName === 'feed' && rootNamespace === 'http://www.w3.org/2005/Atom') {
+    return 'atom';
+  } else {
+    return 'unknown';
+  }
+}
+
+function sanitizeString(str) {
+  str = str.replace(/<[^>]*>?/gm, ''); // Remove HTML
+  str = str.replace(/[\n\r]/g, ''); // Remove newline characters
+  str = str.replace(/stop/g, ''); // Remove "stop"
+  str = str.replace(/&nbsp;/g, ''); // Remove 
+  str = str.replace(/\.\./g, ''); // Remove ..
+  str = str.replace(/\.\.\./g, ''); // Remove ...
+  str = str.replace(/...,/g, ''); // Remo
+  str = str.replace(/.,/g, ''); // Remove "
+  str = str.replace(/&#39;/g, ''); // Remove 
+  return str;
+}
+
+function extractElementText(parent, elementName, namespace, attribute) {
+  var element = parent.getChild(elementName, namespace);
+  if (element) {
+    if (attribute) {
+      var attr = element.getAttribute(attribute);
+      if (attr) {
+        var rawUrl = attr.getValue();
+        if (rawUrl.startsWith('https://www.google.com/url?')) {
+          var match = rawUrl.match(/url=([^&]*)/);
+          if (match) {
+            return decodeURIComponent(match[1]);
+          }
+        } else {
+          return rawUrl;
+        }
+      }
+    } else {
+      var text = element.getText();
+      return sanitizeString(text);
+    }
+  }
+  return '';
+}
+
+function parseFeeds(sheet) {
+  var urls = sheet.getRange(2, 2, sheet.getLastRow()).getValues();
+  var data = [];
+  var maxItems = sheet.getRange('E2').getValue();
+
+  for (var i = 0; i < urls.length; i++) {
+    var url = urls[i][0];
+
+    if (url && url.startsWith('http')) {
+      try {
+        var xml = UrlFetchApp.fetch(url).getContentText();
+        var document = XmlService.parse(xml);
+        var root = document.getRootElement();
+
+        var feedType = detectFeedType(root);
+
+        if (feedType === 'rss') {
+          // Parse as RSS
+          data = data.concat(parseRSS(root, maxItems, url));
+        } else if (feedType === 'atom') {
+          // Parse as Atom
+          data = data.concat(parseAtom(root, maxItems, url));
+        } else {
+          // Parse using generic approach
+          data = data.concat(parseGenericFeed(root, maxItems, url));
+        }
+      } catch (error) {
+        console.error('Failed to parse feed at ' + url + ' due to ' + error.message);
+      }
+    }
+  }
+
+  if (data.length > 0) {
+    var numRows = data.length;
+    var numCols = data[0].length;
+    var range = sheet.getRange(2, 3, numRows, numCols); // Change this to write parsed results to column C and D
+    range.setValues(data);
+  }
+}
+
+function parseRSS(rss, maxItems, url) {
+  var channel = rss.getChild('channel');
+  var items = channel.getChildren('item');
+
+  var data = [];
+
+  for (var i = 0; i < Math.min(items.length, maxItems); i++) {
+    var titleElement = items[i].getChild('title');
+    var descriptionElement = items[i].getChild('description');
+    var linkElement = items[i].getChild('link');
+
+    var title = titleElement ? titleElement.getValue().trim().substr(0, 2000) : "";
+    var description = descriptionElement ? sanitizeString(descriptionElement.getValue().trim().substr(0, 5000)) : "";
+    var link = linkElement ? linkElement.getValue().trim().substr(0, 5000) : ""; // Extracting the link
+
+    data.push([title + ": " + description, link]);
+  }
+
+  return data;
+}
+
+
+function parseAtom(feed, maxItems, url) {
+  var atomNamespace = XmlService.getNamespace('http://www.w3.org/2005/Atom');
+  var entries = feed.getChildren('entry', atomNamespace);
+
+  var data = [];
+
+  for (var i = 0; i < Math.min(entries.length, maxItems); i++) {
+    var title = extractElementText(entries[i], 'title', atomNamespace).substr(0, 2000);
+    var content = extractElementText(entries[i], 'content', atomNamespace).substr(0, 5000);
+    var link = extractElementText(entries[i], 'link', atomNamespace, 'href').substr(0, 5000);
+
+    data.push([title + " : " + content, link]);
+  }
+
+  return data;
+}
+
+function generateContent() {
+  var scriptProperties = PropertiesService.getScriptProperties();
+  var wpurl = scriptProperties.getProperty('wpurl');
+  var userkey = scriptProperties.getProperty('wpkey');
+  var proxyUrl = scriptProperties.getProperty('proxyurl');
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getRange(2, 2, sheet.getLastRow() - 1, 2).getValues(); // Adjusted range
+  var allSheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  var titleSheet = allSheets[1]; // Sheets are 0-indexed, so 1 is the second sheet.
+  if (!titleSheet) {
+    Logger.log('Title sheet not found.');
+    return;
+  }
+
+  for (var i = 0; i < data.length; i++) {
+    var sourcerow = i + 2;
+    var title = titleSheet.getRange(sourcerow, 2).getValue();
+    var row = data[i];
+    var content = row[0]; // Assuming row[0] represents the article
+
+    if (!content) { // If B column cell is empty, skip this iteration
+      continue;
+    }
+
+    var posttype = sheet.getRange('A37').getValue();
+    var systemPrompt = sheet.getRange('A32').getValue().trim();
+    var userPrompt = sheet.getRange('A35').getValue().trim();
+    var model = sheet.getRange('A39').getValue();
+    var maxTokens = sheet.getRange('A41').getValue();
+    var temperature = sheet.getRange('A43').getValue();
+
+    var systemPackage = {
+      "role": "system",
+      "content": systemPrompt
+    };
+
+    var userPackage = {
+      "role": "user",
+      "content": userPrompt + " " + content
+    };
+
+    var postData = {
+      'model': model,
+      'max_tokens': Number(maxTokens),
+      'defaultTitle': title,
+      'temperature': Number(temperature),
+      'messages': [systemPackage, userPackage]
+    };
+
+    var options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'sourcerow': sourcerow,
+        'wpurl': wpurl,
+        'userkey': userkey,
+        'posttype': posttype,
+      },
+      payload: JSON.stringify(postData),
+      muteHttpExceptions: true
+    };
+
+    try {
+  var response = UrlFetchApp.fetch(proxyUrl, options);
+  Logger.log("Response code: " + response.getResponseCode());
+  Logger.log("Response headers: " + JSON.stringify(response.getHeaders()));
+  Logger.log(response.getContentText());  // Log the raw response
+
+  var content = JSON.parse(response.getContentText());
+  var id = content.id;
+  var sourcerow = content.sourcerow;
+  var sourceContent = sheet.getRange(sourcerow, 2).getValue();
+  sheet.getRange(sourcerow, 2).clear();
+  sheet.getRange(sourcerow, 4).setValue(sourceContent);
+  sheet.getRange(sourcerow, 5).setValue(id);
+} catch (error) {
+  // Log error or handle the case where the API response is not as expected
+  Logger.log('Unexpected API response', content);
+  Logger.log('Error fetching or parsing response: ' + error.message);
+}
+  }
+}
