@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Home Page</title>
+        <title>AI Secret Agent Demo</title>
       </Head>
       <div style={{
         position: 'relative', 
