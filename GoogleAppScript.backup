@@ -138,6 +138,7 @@ function parseAtom(feed, maxItems, url) {
 
 function generateContent() {
   var scriptProperties = PropertiesService.getScriptProperties();
+  var pKey = scriptProperties.getProperty('pkey');
   var wpurl = scriptProperties.getProperty('wpurl');
   var userkey = scriptProperties.getProperty('wpkey');
   var proxyUrl = scriptProperties.getProperty('proxyurl');
@@ -189,10 +190,12 @@ function generateContent() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'pKey' : pKey,
         'sourcerow': sourcerow,
         'wpurl': wpurl,
         'userkey': userkey,
         'posttype': posttype,
+        
       },
       payload: JSON.stringify(postData),
       muteHttpExceptions: true
