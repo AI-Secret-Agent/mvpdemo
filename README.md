@@ -59,6 +59,12 @@ pkey -  your personal key - make it up or generate one, has to match on both ser
 
 Add tasks and prompts in the Sheet, you can run generatecontent function and it will send a post request, which will post the response to your WordPress as a Draft.
 
+# Known Issues
+authentication is probably messed.  Warning unverified. (it's fine just click  that it's ok lol)  Going to disconnect it from my account for the demo at least.  Trust your own app, or verify it with google.   I can do it for a product, I'm not going to oauth everyone on the demo.
+
+## I had some problems with the personal auth on vercel.  
+ I don't know if it's just me but if someone could test, and confirm maybe we can figure it out.  Works elsewhere, so really not too worried.   My guess is it has to do with next.js but it worked without the personal auth and it works for the other env variables so I'm kind of lost on that one
+
 If you get a html response, try removing or adding the / from the proxy url in your sheet properties (sometimes one works, sometimes the other)
 If you get a 401 error that means it is working and rejecting the authentication you should check that you have the correct OPENAI API key, check whitespaces, and make sure the proxy url has https:// if it's not a secure connection or your key is invalid you will get this error.
 
